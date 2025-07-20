@@ -15,11 +15,11 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
     lg: 'loading-lg',
   };
 
-  const spinnerSizeClass = sizeClassMap[size] || 'loading-md'; // Fallback to md if size is invalid
+  const spinnerSizeClass = sizeClassMap[size];
 
   return (
     <div className={`flex justify-center items-center ${className}`}>
-      <span className={`loading loading-spinner ${spinnerSizeClass}`}></span>
+      <span className={`loading loading-spinner loading-lg ${spinnerSizeClass}`}></span>
     </div>
   );
 };

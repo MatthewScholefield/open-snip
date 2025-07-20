@@ -2,7 +2,7 @@ import React from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { getLanguageExtension, getLanguageDisplayName } from '../lib/languages';
-import { SnippetFile } from '../types'; // Assuming SnippetFile type is available
+import type { SnippetFile } from '../types';
 
 interface SnippetFileViewerProps {
   file: SnippetFile;
