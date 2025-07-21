@@ -1,9 +1,9 @@
 import React from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { useLocalStorage } from 'usehooks-ts';
 import { getLanguageExtension, getLanguageDisplayName, detectLanguageFromFilename, SUPPORTED_LANGUAGES } from '../lib/languages';
 import { type CodeFile } from '../types';
+import { useTheme } from '../hooks/useTheme';
 
 interface CodeEditorProps {
   file: CodeFile;
@@ -18,7 +18,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   onDelete,
   showDelete = true 
 }) => {
-  const [theme] = useLocalStorage<'light' | 'dark'>('theme', 'light');
+  const { effectiveTheme } = useTheme();
 
   const handleNameChange = (name: string) => {
     const detectedLanguage = detectLanguageFromFilename(name);
@@ -102,7 +102,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
             value={file.content}
             onChange={handleContentChange}
             extensions={extensions}
-            theme={theme === 'dark' ? oneDark : undefined}
+            theme={effectiveTheme === 'dark' ? oneDark : undefined}
             placeholder="Enter your code here..."
             basicSetup={{
               lineNumbers: true,

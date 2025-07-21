@@ -1,37 +1,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useLocalStorage, useMediaQuery } from 'usehooks-ts';
+import { useTheme } from '../hooks/useTheme';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [theme, setTheme] = useLocalStorage<'light' | 'dark' | 'auto'>('theme', 'auto');
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
-
-  const getEffectiveTheme = () => {
-    if (theme === 'auto') {
-      return prefersDarkMode ? 'dark' : 'light';
-    }
-    return theme;
-  };
-
-  const toggleTheme = () => {
-    if (theme === 'auto') {
-      setTheme('light');
-    } else if (theme === 'light') {
-      setTheme('dark');
-    } else {
-      setTheme('auto');
-    }
-  };
-
-  React.useEffect(() => {
-    const effectiveTheme = getEffectiveTheme();
-    document.documentElement.setAttribute('data-theme', effectiveTheme);
-  }, [theme, prefersDarkMode]);
 
   return (
     <div className="min-h-screen bg-base-100">

@@ -3,10 +3,11 @@ import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { getLanguageExtension, getLanguageDisplayName } from '../lib/languages';
 import type { CodeFile } from '../types';
+import type { EffectiveTheme } from '../hooks/useTheme';
 
 interface SnippetFileViewerProps {
   file: CodeFile;
-  theme: 'light' | 'dark';
+  theme: EffectiveTheme;
   onCopyToClipboard: (content: string) => void;
 }
 
@@ -42,7 +43,7 @@ export const SnippetFileViewer: React.FC<SnippetFileViewerProps> = ({
           <CodeMirror
             value={file.content}
             extensions={extensions}
-            theme={theme === 'dark' ? oneDark : 'elegant'}
+            theme={theme === 'dark' ? oneDark : undefined}
             editable={false}
             basicSetup={{
               lineNumbers: true,

@@ -1,15 +1,15 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
-import { useLocalStorage } from 'usehooks-ts';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { ErrorAlert } from '../components/ErrorAlert';
 import { snippetApi } from '../lib/api';
 import { SnippetFileViewer } from '../components/SnippetFileViewer';
+import { useTheme } from '../hooks/useTheme';
 
 export const ViewSnippetPage: React.FC = () => {
   const { blobId } = useParams<{ blobId: string }>();
-  const [theme] = useLocalStorage<'light' | 'dark'>('theme', 'light');
+  const { effectiveTheme } = useTheme();
 
   const { data: snippet, isLoading, error } = useQuery({
     queryKey: ['snippet', blobId],
@@ -87,7 +87,7 @@ export const ViewSnippetPage: React.FC = () => {
           <SnippetFileViewer
             key={file.id}
             file={file}
-            theme={theme}
+            theme={effectiveTheme}
             onCopyToClipboard={handleCopyToClipboard}
           />
         ))}
