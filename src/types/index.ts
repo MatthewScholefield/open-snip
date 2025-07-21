@@ -39,15 +39,3 @@ export interface UpdateSnippetRequest {
   files?: CodeFile[];
 }
 
-export const SUPPORTED_LANGUAGES = [
-  'javascript',
-  'typescript',
-  'python',
-  'html',
-  'css',
-  'json',
-  'markdown',
-  'text'
-] as const;
-
-export type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number];

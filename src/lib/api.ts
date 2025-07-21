@@ -1,18 +1,23 @@
 import { nanoid } from 'nanoid';
-import { CodeFile, Snippet, type Snippet, type CreateSnippetRequest, type UpdateSnippetRequest, type CodeFile, type RecentSnippet } from '../types';
+import { CodeFile, Snippet, type CreateSnippetRequest, type UpdateSnippetRequest, type RecentSnippet } from '../types';
 import { dbOperations } from './db';
 import { type } from 'arktype';
 
 const BLOBSE_BASE_URL = 'https://blobse.us.to';
 
 export class BlobseError extends Error {
+  status: number | undefined;
+  response: Response | undefined;
+
   constructor(
     message: string,
-    public status?: number,
-    public response?: Response
+    status?: number,
+    response?: Response
   ) {
     super(message);
     this.name = 'BlobseError';
+    this.status = status;
+    this.response = response;
   }
 }
 

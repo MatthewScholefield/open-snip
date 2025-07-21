@@ -2,8 +2,8 @@ import React from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { useLocalStorage } from 'usehooks-ts';
-import { getLanguageExtension, getLanguageDisplayName, detectLanguageFromFilename } from '../lib/languages';
-import { SUPPORTED_LANGUAGES, type SupportedLanguage, type CodeFile } from '../types';
+import { getLanguageExtension, getLanguageDisplayName, detectLanguageFromFilename, SUPPORTED_LANGUAGES } from '../lib/languages';
+import { type CodeFile } from '../types';
 
 interface CodeEditorProps {
   file: CodeFile;
@@ -29,7 +29,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
     });
   };
 
-  const handleLanguageChange = (language: SupportedLanguage) => {
+  const handleLanguageChange = (language: string) => {
     onChange({
       ...file,
       language,
@@ -72,7 +72,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
             <select
               className="select select-bordered"
               value={file.language}
-              onChange={(e) => handleLanguageChange(e.target.value as SupportedLanguage)}
+              onChange={(e) => handleLanguageChange(e.target.value)}
             >
               {SUPPORTED_LANGUAGES.map((lang) => (
                 <option key={lang} value={lang}>

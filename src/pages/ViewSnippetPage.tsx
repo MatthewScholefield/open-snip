@@ -1,13 +1,10 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
-import CodeMirror from '@uiw/react-codemirror';
-import { oneDark } from '@codemirror/theme-one-dark';
 import { useLocalStorage } from 'usehooks-ts';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { ErrorAlert } from '../components/ErrorAlert';
 import { snippetApi } from '../lib/api';
-import { getLanguageExtension, getLanguageDisplayName } from '../lib/languages';
 import { SnippetFileViewer } from '../components/SnippetFileViewer';
 
 export const ViewSnippetPage: React.FC = () => {

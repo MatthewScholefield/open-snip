@@ -2,10 +2,10 @@ import React from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { getLanguageExtension, getLanguageDisplayName } from '../lib/languages';
-import type { SnippetFile } from '../types';
+import type { CodeFile } from '../types';
 
 interface SnippetFileViewerProps {
-  file: SnippetFile;
+  file: CodeFile;
   theme: 'light' | 'dark';
   onCopyToClipboard: (content: string) => void;
 }

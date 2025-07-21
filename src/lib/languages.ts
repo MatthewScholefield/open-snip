@@ -5,9 +5,19 @@ import { css } from '@codemirror/lang-css';
 import { json } from '@codemirror/lang-json';
 import { markdown } from '@codemirror/lang-markdown';
 import type { Extension } from '@codemirror/state';
-import type { SupportedLanguage } from '../types';
 
-export const getLanguageExtension = (language: SupportedLanguage): Extension | null => {
+export const SUPPORTED_LANGUAGES = [
+  'javascript',
+  'typescript',
+  'python',
+  'html',
+  'css',
+  'json',
+  'markdown',
+  'text',
+] as const;
+
+export const getLanguageExtension = (language: string): Extension | null => {
   switch (language) {
     case 'javascript':
     case 'typescript':
@@ -28,8 +38,8 @@ export const getLanguageExtension = (language: SupportedLanguage): Extension | n
   }
 };
 
-export const getLanguageDisplayName = (language: SupportedLanguage): string => {
-  const displayNames: Record<SupportedLanguage, string> = {
+export const getLanguageDisplayName = (language: string): string => {
+  const displayNames: Record<string, string> = {
     javascript: 'JavaScript',
     typescript: 'TypeScript',
     python: 'Python',
@@ -43,10 +53,10 @@ export const getLanguageDisplayName = (language: SupportedLanguage): string => {
   return displayNames[language] || language;
 };
 
-export const detectLanguageFromFilename = (filename: string): SupportedLanguage => {
+export const detectLanguageFromFilename = (filename: string): string => {
   const extension = filename.split('.').pop()?.toLowerCase();
   
-  const extensionMap: Record<string, SupportedLanguage> = {
+  const extensionMap: Record<string, string> = {
     js: 'javascript',
     jsx: 'javascript',
     ts: 'typescript',
