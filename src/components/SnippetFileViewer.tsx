@@ -42,7 +42,7 @@ export const SnippetFileViewer: React.FC<SnippetFileViewerProps> = ({
           <CodeMirror
             value={file.content}
             extensions={extensions}
-            theme={theme === 'dark' ? oneDark : undefined}
+            theme={theme === 'dark' ? oneDark : 'elegant'}
             editable={false}
             basicSetup={{
               lineNumbers: true,
