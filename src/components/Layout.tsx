@@ -1,24 +1,37 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useLocalStorage } from 'usehooks-ts';
+import { useLocalStorage, useMediaQuery } from 'usehooks-ts';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [theme, setTheme] = useLocalStorage<'light' | 'dark'>('theme', 'light');
+  const [theme, setTheme] = useLocalStorage<'light' | 'dark' | 'auto'>('theme', 'auto');
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const location = useLocation();
 
+  const getEffectiveTheme = () => {
+    if (theme === 'auto') {
+      return prefersDarkMode ? 'dark' : 'light';
+    }
+    return theme;
+  };
+
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
+    if (theme === 'auto') {
+      setTheme('light');
+    } else if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('auto');
+    }
   };
 
   React.useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    const effectiveTheme = getEffectiveTheme();
+    document.documentElement.setAttribute('data-theme', effectiveTheme);
+  }, [theme, prefersDarkMode]);
 
   return (
     <div className="min-h-screen bg-base-100">
@@ -48,7 +61,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
         <div className="navbar-end">
           <button className="btn btn-ghost btn-circle" onClick={toggleTheme}>
-            {theme === 'light' ? '🌙' : '☀️'}
+            {theme === 'auto' ? '🔄' : theme === 'light' ? '🌙' : '☀️'}
           </button>
         </div>
       </div>
